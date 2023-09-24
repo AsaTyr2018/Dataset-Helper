@@ -6,7 +6,7 @@ from modules.image_conversion import create_image_conversion_tab
 
 def open_git_link():
     import webbrowser
-    webbrowser.open("https://github.com/AsaTyr2018/script-snippets")
+    webbrowser.open("https://github.com/AsaTyr2018/Dataset-Helper")
 
 # Erstellen Sie das Hauptfenster
 root = tk.Tk()
