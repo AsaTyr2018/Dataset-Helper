@@ -23,8 +23,10 @@ Click the "Remove Tags" button to perform the tag removal. The tool will update 
 
 ### Folder Creation
 
-The "Folder Creation" function allows you to create a predefined folder structure within a specified base directory. It generates the following folders:
-Dataset: Contains images and tagging files.
+The "Folder Creation" function allows you to create a predefined folder structure within a specified base directory. 
+
+It generates the following folders:  
+Dataset: Contains images and tagging files.  
 Output: Contains LoRA files and sample images (if configured).
 
 Here's how to use it:
