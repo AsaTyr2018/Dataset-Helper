@@ -9,6 +9,11 @@ def create_folders(base_dir, project_name, folders):
         os.makedirs(full_path, exist_ok=True)
     return project_dir
 
+def create_txt_file(project_dir, project_name):
+    txt_file_path = os.path.join(project_dir, "sample.txt")
+    with open(txt_file_path, "w") as txt_file:
+        txt_file.write(f"{project_name}, 1girl, solo, looking at viewer, smile, closed mouth, upper body,\n")
+
 def create_folder_creation_tab(notebook):
     folder_creation_frame = ttk.Frame(notebook)
     notebook.add(folder_creation_frame, text="Folder Creation")
@@ -35,9 +40,10 @@ def create_folder_creation_tab(notebook):
         folders = [
             "dataset",
             "output",
-            "output\sample"
+            "output\\sample"  # Achten Sie darauf, doppelte Backslashes zu verwenden
         ]
         created_folders = create_folders(base_dir, project_name, folders)
+        create_txt_file(created_folders, project_name)  # Fügen Sie diese Zeile hinzu
         result_label.config(text=f"Folders successfully created at {created_folders}")
 
     create_folders_button.config(command=create_folders_button_click)
