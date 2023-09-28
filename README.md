@@ -24,6 +24,7 @@ Click the "Remove Tags" button to perform the tag removal. The tool will update 
 ### Folder Creation
 
 The "Folder Creation" function allows you to create a predefined folder structure within a specified base directory. 
+It also creates a sample.txt with a standard Prompt using the Project Name as Activator. You can Change it in the File on Line 15.
 
 It generates the following folders:  
 Dataset: Contains images and tagging files.  
