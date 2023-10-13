@@ -45,6 +45,20 @@ Click on the "Image Conversion" tab in the GUI.
 Enter the folder path containing the images you want to convert.
 Click the "Convert Images to PNG" button to start the conversion process. The tool will convert compatible image formats within the specified folder.
 
+### Tag Processor
+
+The "Tag Processor" allows you to extract tags or keywords from text data. Follow these steps to use it:
+
+1. Launch the Dataset Helper application.
+2. Click on the "Tag Removal" tab.
+3. Enter the Path to your Dataset. (Requires existing Caption TXT Files)
+4. Click "Check Tags" and Copy/Paste the Content in Tag Proccessor
+5.  Click the "Process Tags" button.
+6. The extracted tags will be displayed in the same text box, separated by commas.
+
+You can now check the received tags and remove what does not belong to the character (for example). (Background, Solo, looking at viewer, etc...)
+See "Tag Removal"
+
 ## Getting Started
 
 1. **Installation:** No installation is required. Just download the provided files and make sure you have Python installed.
