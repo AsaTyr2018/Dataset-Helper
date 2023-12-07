@@ -1,38 +1,52 @@
 import tkinter as tk
 from tkinter import ttk
 import os
+import random
 from PIL import Image
 import subprocess
 
 def convert_and_rename_images(folder_path):
-    image_formats = [".webp", ".jpg", ".jpeg", ".bmp", ".tiff",'png']
+    image_formats = [".webp", ".jpg", ".jpeg", ".bmp", ".tiff", ".png"]
     avif_format = ".avif"
-    
+    temp_suffix = "_temp_rename_"
+
+    # Reset image counter
     image_counter = 0
+
+    # First pass: Rename to temporary file names
     for root, dirs, files in os.walk(folder_path):
         for filename in files:
-            original_path = os.path.join(root, filename)
-            
-            if any(filename.endswith(format) for format in image_formats):
-                png_path = os.path.splitext(original_path)[0] + ".png"
-                with Image.open(original_path) as img:
-                    img.save(png_path, "PNG")
-                if not filename.endswith(".png"):
-                    os.remove(original_path)
-                # Umbenennen des frisch konvertierten Bildes
-                rename_image(png_path, root, image_counter)
-                image_counter += 1
-            elif filename.endswith(avif_format):
-                png_path = os.path.splitext(original_path)[0] + ".png"
-                subprocess.run(["ffmpeg", "-i", original_path, png_path])
-                if not filename.endswith(".png"):
-                    os.remove(original_path)
-                # Umbenennen des frisch konvertierten Bildes
-                rename_image(png_path, root, image_counter)
+            if any(filename.endswith(format) for format in image_formats) or filename.endswith(avif_format):
+                try:
+                    temp_name = f"{temp_suffix}{random.randint(1000, 9999)}.png"
+                    temp_path = os.path.join(root, temp_name)
+                    original_path = os.path.join(root, filename)
+                    os.rename(original_path, temp_path)
+                except PermissionError:
+                    print(f"Skipping locked file: {filename}")
+
+    # Second pass: Convert and finally rename
+    for root, dirs, files in os.walk(folder_path):
+        for filename in files:
+            if filename.startswith(temp_suffix):
+                process_image(root, filename, image_counter, image_formats, avif_format)
                 image_counter += 1
 
+def process_image(root, filename, counter, image_formats, avif_format):
+    temp_path = os.path.join(root, filename)
+
+    # Convert to PNG
+    if any(filename.endswith(format) for format in image_formats):
+        with Image.open(temp_path) as img:
+            img.save(temp_path, "PNG")
+    elif filename.endswith(avif_format):
+        subprocess.run(["ffmpeg", "-i", temp_path, temp_path])
+
+    # Rename the converted image
+    rename_image(temp_path, root, counter)
+
 def rename_image(image_path, root_folder, counter):
-    project_name = os.path.basename(os.path.dirname(root_folder))
+    project_name = os.path.basename(root_folder)
     new_name = f"{project_name}{counter:02}.png"
     new_path = os.path.join(root_folder, new_name)
     os.rename(image_path, new_path)
